@@ -1,0 +1,80 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.0.0
+  Exclude:
+    - '**/tmp/**/*'
+    - '**/templates/**/*'
+    - '**/node_modules/**/*'
+    - "vendor/**/*"
+    - "db/**/*"
+    - "bin/**/*"
+    - "app/channels/**/*"
+  DisplayCopNames: true
+  NewCops: enable
+
+# AbcSizeの閾値上限を30に拡張
+Metrics/AbcSize:
+  Max: 30
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# ネストされたクラス/モジュールの定義方法は省略形
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+# Arrayの最後にカンマを付ける
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+# ドキュメントのないpublic classを許可
+Style/Documentation:
+  Enabled: false
+
+# 1行の最大文字数
+Layout/LineLength:
+  Enabled: false
+
+# 1メソッドの行数
+Metrics/MethodLength:
+  CountComments: false
+  Max: 30
+
+# 循環的複雑度
+Metrics/CyclomaticComplexity:
+  Max: 30
+
+# set_,get_を許可する
+Naming/AccessorMethodName:
+  Enabled: false
+
+# method呼出時の改行インデント調整をオフ
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+# 変数に数値が含まれる場合のフォーマットを無効
+Naming/VariableNumber:
+  Enabled: false
+
+# 複数行に跨いだ改行のインデント
+Layout/MultilineOperationIndentation:
+  Enabled: false
+
+# クラス行数
+Metrics/ClassLength:
+  Max: 600
+
+# 複雑度
+Metrics/PerceivedComplexity:
+  Max: 15
+
+# 後置ifの制限を無効化
+Style/IfUnlessModifier:
+  Enabled: false
