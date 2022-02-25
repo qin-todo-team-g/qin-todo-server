@@ -1,0 +1,78 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.0
+  node: circleci/node@2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.0-node
+        environment:
+          RAILS_ENV: test
+          POSTGRES_HOST: 127.0.0.1
+      - image: cimg/postgres:13.5
+        environment:
+          POSTGRES_USER: qin_todo_server
+          POSTGRES_DB: qin_todo_server_test
+          # POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+
+    # working_directory: ~/job_search
+
+    steps:
+      - checkout
+
+      - ruby/install-deps # Ruby Orb を使って依存関係をインストールします。
+      # Node Orb を使ってパッケージをインストールします。
+      # Yarn の使用および 依存関係のキャッシュに yarn.lock の使用を指定します。
+      # 詳細は、 https://circleci.com/docs/2.0/caching/　を参照してください。
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+
+      # # restore gem from cache
+      # - restore_cache:
+      #     keys:
+      #       - gem-cache-v1-{{ checksum "Gemfile.lock" }}
+      #       - gem-cache-v1-
+
+      # # gem install
+      # - run:
+      #     command: |
+      #       gem install bundler
+      #       bundle config set path 'vendor/bundle'
+      #       bundle install --jobs=4 --retry=3
+
+      # - save_cache:
+      #     paths:
+      #       - ./vendor/bundle
+      #     key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # - run:
+      #     name: "Node.js と npm を更新"
+      #     command: |
+      #       curl -sSL "https://nodejs.org/dist/v16.13.1/node-v16.13.1-linux-x64.tar.xz" | sudo tar --strip-components=2 -xJ -C /usr/local/bin/ node-v16.13.1-linux-x64/bin/node
+      #       curl https://www.npmjs.com/install.sh | sudo bash
+
+      # # restore yarn from cache
+      # - restore_cache:
+      #     keys:
+      #       - yarn-packages-{{ checksum "yarn.lock" }}
+      #       - yarn-packages-
+
+      # # yarn install
+      # - run: yarn install
+
+      # - save_cache:
+      #     paths:
+      #       - ~/.cache/yarn
+      #     key: yarn-packages-{{ checksum "yarn.lock" }}
+
+      # Database setup
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:migrate
+
+      # Rubocop
+      - run: bundle exec rubocop app
+      # Rspec
+      - run: bundle exec rspec
