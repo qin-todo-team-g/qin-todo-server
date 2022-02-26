@@ -26,9 +26,6 @@ jobs:
       # Node Orb を使ってパッケージをインストールします。
       # Yarn の使用および 依存関係のキャッシュに yarn.lock の使用を指定します。
       # 詳細は、 https://circleci.com/docs/2.0/caching/　を参照してください。
-      - node/install-packages:
-          pkg-manager: yarn
-          cache-key: "yarn.lock"
 
       # # restore gem from cache
       # - restore_cache:
