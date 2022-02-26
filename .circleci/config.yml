@@ -11,7 +11,7 @@ jobs:
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
           
-      - image: cimg/postgres:13.0
+      - image: cimg/postgres:13.1
         environment:
           POSTGRES_USER: qin_todo_server
           POSTGRES_DB: qin_todo_server_test
