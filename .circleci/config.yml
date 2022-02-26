@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.0
-  node: circleci/node@2
 
 jobs:
   build:
@@ -64,6 +63,10 @@ jobs:
       #     paths:
       #       - ~/.cache/yarn
       #     key: yarn-packages-{{ checksum "yarn.lock" }}
+
+      - run:
+            name: DBの起動を待つ
+            command: dockerize -wait tcp://127.0.0.1:5432 -timeout 120s
 
       # Database setup
       - run: bundle exec rails db:create
