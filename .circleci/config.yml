@@ -11,11 +11,10 @@ jobs:
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
           
-      - image: cimg/postgres:13.5
+      - image: cimg/postgres:14.0
         environment:
           POSTGRES_USER: qin_todo_server
           POSTGRES_DB: qin_todo_server_test
-          POSTGRES_HOST_AUTH_METHOD: trust
           # POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
 
     # working_directory: ~/job_search
