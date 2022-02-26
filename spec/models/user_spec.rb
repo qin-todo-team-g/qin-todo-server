@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
       example '空は無効' do
         user = FactoryBot.build(:user, name: nil)
         user.valid?
-        expect(user.errors[:name]).to include('入力してください')
+        expect(user.errors[:name]).to include('を入力してください')
       end
     end
   end

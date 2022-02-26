@@ -8,52 +8,37 @@ jobs:
     docker:
       - image: cimg/ruby:3.0.0-node
         environment:
-          POSTGRES_USER: qin_todo_server 
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
-          
       - image: cimg/postgres:13.5
         environment:
           POSTGRES_USER: qin_todo_server
           POSTGRES_DB: qin_todo_server_test
-          # POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+          POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
 
     working_directory: ~/qin-todo-server
 
     steps:
       - checkout
-
-      - ruby/install-deps # Ruby Orb を使って依存関係をインストールします。
-      # Node Orb を使ってパッケージをインストールします。
-      # Yarn の使用および 依存関係のキャッシュに yarn.lock の使用を指定します。
-      # 詳細は、 https://circleci.com/docs/2.0/caching/　を参照してください。
-
-      # # restore gem from cache
-      # - restore_cache:
-      #     keys:
-      #       - gem-cache-v1-{{ checksum "Gemfile.lock" }}
-      #       - gem-cache-v1-
-
-      # # gem install
-      # - run:
-      #     command: |
-      #       gem install bundler
-      #       bundle config set path 'vendor/bundle'
-      #       bundle install --jobs=4 --retry=3
-
-      # - save_cache:
-      #     paths:
-      #       - ./vendor/bundle
-      #     key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
+      # restore gem from cache
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ checksum "Gemfile.lock" }}
+            - gem-cache-v1-
+      # gem install
       - run:
-            name: DBの起動を待つ
-            command: dockerize -wait tcp://127.0.0.1:5432 -timeout 120s
-
+          command: |
+            gem install bundler
+            bundle config set path 'vendor/bundle'
+            bundle install --jobs=4 --retry=3
+      # save gem from cache
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
       # Database setup
       - run: bundle exec rails db:create
       - run: bundle exec rails db:migrate
-
       # Rubocop
       - run: bundle exec rubocop app
       # Rspec
