@@ -64,6 +64,7 @@ jobs:
       #     paths:
       #       - ~/.cache/yarn
       #     key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run: rm /usr/local/var/postgres/postmaster.pid
 
       - run:
             name: DBの起動を待つ
