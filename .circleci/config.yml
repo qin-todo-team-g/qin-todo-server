@@ -8,6 +8,7 @@ jobs:
     docker:
       - image: cimg/ruby:3.0.0-node
         environment:
+          POSTGRES_USER: qin_todo_server 
           RAILS_ENV: test
           POSTGRES_HOST: 127.0.0.1
           
@@ -17,7 +18,7 @@ jobs:
           POSTGRES_DB: qin_todo_server_test
           # POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
 
-    # working_directory: ~/job_search
+    working_directory: ~/qin-todo-server
 
     steps:
       - checkout
@@ -64,7 +65,6 @@ jobs:
       #     paths:
       #       - ~/.cache/yarn
       #     key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run: rm /usr/local/var/postgres/postmaster.pid
 
       - run:
             name: DBの起動を待つ
