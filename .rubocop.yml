@@ -78,3 +78,7 @@ Metrics/PerceivedComplexity:
 # 後置ifの制限を無効化
 Style/IfUnlessModifier:
   Enabled: false
+
+# Windowsの改行コードを変更 
+Style/EndOfLine: 
+  EnforcedStyle: lf
