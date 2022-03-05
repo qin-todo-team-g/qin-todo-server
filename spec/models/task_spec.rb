@@ -21,32 +21,46 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  it "type, is_done, title, user_idがあれば有効な状態であること" do
-    task = build(:task)
-    expect(task).to be_valid  # task.valid? が true になればパスする
+  describe 'validation' do
+    context 'is_done' do
+      example '表示名が正しい' do
+        expect(Task.human_attribute_name(:is_done)).to eq('完了')
+      end
+      example '空は無効' do
+        task = FactoryBot.build(:task, is_done: nil)
+        task.valid?
+        expect(task.errors[:is_done]).to include('は一覧にありません')
+      end
+    end
+
+    context 'task_type' do
+      example '表示名が正しい' do
+        expect(Task.human_attribute_name(:task_type)).to eq('タイプ')
+      end
+      example '空は無効' do
+        task = FactoryBot.build(:task, task_type: nil)
+        task.valid?
+        expect(task.errors[:task_type]).to include('を入力してください')
+      end
+    end
+
+    context 'title' do
+      example '表示名が正しい' do
+        expect(Task.human_attribute_name(:title)).to eq('タイトル')
+      end
+      example '空は無効' do
+        task = FactoryBot.build(:task, title: nil)
+        task.valid?
+        expect(task.errors[:title]).to include('を入力してください')
+      end
+    end
   end
-  
-  # it "task_typeがなければ無効な状態であること" do
-  #   task = Task.new(task_type: nil)
-  #   task.valid?
-  #   expect(task.errors[:task_type]).to include("can't be blank")
-  # end
 
-  # it "is_doneがなければ無効な状態であること" do
-  #   task = Task.new(is_done: nil)
-  #   task.valid?
-  #   expect(task.errors[:is_done]).to include("can't be blank")
-  # end
-
-  # it "titleがなければ無効な状態であること" do
-  #   task = Task.new(title: nil)
-  #   task.valid?
-  #   expect(task.errors[:title]).to include("can't be blank")
-  # end
-
-  # it "user_idがなければ無効な状態であること" do
-  #   task = Task.new(user_id: nil)
-  #   task.valid?
-  #   expect(task.errors[:user_id]).to include("can't be blank")
-  # end
+  describe 'アソシエーションのテスト' do
+    context 'Userモデルとの関係' do
+      it 'N:1となっている' do
+        expect(Task.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
+  end
 end
