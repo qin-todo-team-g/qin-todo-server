@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 class Api::V1::TasksController < ApplicationController
-  
   def index
     user  = User.find(params[:user_id])
     tasks = user.tasks.all
@@ -54,7 +55,7 @@ class Api::V1::TasksController < ApplicationController
 
   private
 
-    def task_params
-      params.require(:task).permit(:task_type, :title)
-    end
+  def task_params
+    params.require(:task).permit(:task_type, :title)
+  end
 end
