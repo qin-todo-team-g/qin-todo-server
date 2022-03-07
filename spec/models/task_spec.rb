@@ -66,9 +66,9 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe 'アソシエーションのテスト' do
+  describe 'association' do
     context 'Userモデルとの関係' do
-      it 'N:1となっている' do
+      example 'N:1となっている' do
         expect(Task.reflect_on_association(:user).macro).to eq :belongs_to
       end
     end
