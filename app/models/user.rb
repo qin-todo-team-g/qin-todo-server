@@ -36,6 +36,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
   has_many :tasks, dependent: :destroy
+  has_one  :system_settings, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 999 }
   validates :email, presence: true, length: { maximum: 256 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
