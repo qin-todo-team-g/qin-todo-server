@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_26_115229) do
+ActiveRecord::Schema.define(version: 2022_03_10_133343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "system_settings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "is_dark", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_system_settings_on_user_id"
+  end
 
   create_table "tasks", force: :cascade do |t|
     t.integer "task_type", null: false
@@ -37,8 +45,10 @@ ActiveRecord::Schema.define(version: 2022_02_26_115229) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
-    t.string "name", default: "", null: false
-    t.string "email", default: "", null: false
+    t.string "name"
+    t.string "nickname"
+    t.string "image"
+    t.string "email"
     t.json "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -48,5 +58,6 @@ ActiveRecord::Schema.define(version: 2022_02_26_115229) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "system_settings", "users"
   add_foreign_key "tasks", "users"
 end
