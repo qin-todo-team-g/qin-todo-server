@@ -11,6 +11,9 @@ ja:
         task_type: 'タイプ'
         title: 'タイトル'
         user_id: 'ユーザーID'
+      system_setting:
+        is_dark: 'ダークモード'
+        user_id: 'ユーザーID'
   date:
     abbr_day_names:
       - 日
