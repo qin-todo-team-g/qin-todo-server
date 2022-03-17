@@ -53,12 +53,22 @@ RSpec.describe Task, type: :model do
         task.valid?
         expect(task.errors[:title]).to include('を入力してください')
       end
+      example '1000文字は無効' do
+        task = FactoryBot.build(:task, title: 'a' * 1000)
+        task.valid?
+        expect(task.errors[:title]).to include('は999文字以内で入力してください')
+      end
+      example '999文字は有効' do
+        task = FactoryBot.build(:task, title: 'a' * 999)
+        task.valid?
+        expect(task).to be_valid
+      end
     end
   end
 
-  describe 'アソシエーションのテスト' do
+  describe 'association' do
     context 'Userモデルとの関係' do
-      it 'N:1となっている' do
+      example 'N:1となっている' do
         expect(Task.reflect_on_association(:user).macro).to eq :belongs_to
       end
     end

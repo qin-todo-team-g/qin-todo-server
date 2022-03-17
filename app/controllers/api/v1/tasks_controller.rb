@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class Api::V1::TasksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :get_user, only: %i[index create]
+  before_action :get_task, only: %i[update done destroy]
+
   def index
-    user  = User.find(params[:user_id])
-    tasks = user.tasks.all
+    tasks = @user.tasks.all
     if tasks.exists?
       render json: {
         tasks: tasks
@@ -14,8 +17,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def create
-    user = User.find(params[:user_id])
-    task = user.tasks.build(task_params)
+    task = @user.tasks.build(task_params)
     if task.save
       render json: {
         task: task
@@ -26,10 +28,9 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
-    if task.update(task_params)
+    if @task.update(task_params)
       render json: {
-        task: task
+        task: @task
       }, status: :ok
     else
       render json: {}, status: :internal_server_error
@@ -37,11 +38,10 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def done
-    task = Task.find(params[:id])
-    task.toggle(:is_done)
-    if task.save
+    @task.toggle(:is_done)
+    if @task.save
       render json: {
-        task: task
+        task: @task
       }, status: :ok
     else
       render json: {}, status: :internal_server_error
@@ -49,13 +49,20 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
-    task.destroy
+    @task.destroy
   end
 
   private
 
   def task_params
     params.require(:task).permit(:task_type, :title)
+  end
+
+  def get_user
+    @user = current_user
+  end
+
+  def get_task
+    @task = Task.find(params[:id])
   end
 end
