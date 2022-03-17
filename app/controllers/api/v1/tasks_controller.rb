@@ -2,8 +2,8 @@
 
 class Api::V1::TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_user, only: [:index, :create]
-  before_action :get_task, only: [:update, :done, :destroy]
+  before_action :get_user, only: %i[index create]
+  before_action :get_task, only: %i[update done destroy]
 
   def index
     tasks = @user.tasks.all
