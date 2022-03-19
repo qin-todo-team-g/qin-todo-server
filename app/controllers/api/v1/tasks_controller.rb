@@ -3,7 +3,7 @@
 class Api::V1::TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :get_user, only: %i[index create]
-  before_action :get_task, only: %i[update done destroy]
+  before_action :get_task, only: %i[update destroy]
 
   def index
     tasks = @user.tasks.all
@@ -29,17 +29,6 @@ class Api::V1::TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      render json: {
-        task: @task
-      }, status: :ok
-    else
-      render json: {}, status: :internal_server_error
-    end
-  end
-
-  def done
-    @task.toggle(:is_done)
-    if @task.save
       render json: {
         task: @task
       }, status: :ok
