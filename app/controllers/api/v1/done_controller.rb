@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Api::V1::DoneController < ApplicationController
   before_action :authenticate_user!
 
