@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: users
@@ -10,7 +8,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class User < ApplicationRecord
-  validates :name, presence: true, length: { maximum: 999 }
-  validates :email, presence: true, length: { maximum: 256 }, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+FactoryBot.define do
+  factory :user do
+    name { 'user' }
+    sequence(:email) { |n| "test#{n}@email.com" }
+  end
 end
