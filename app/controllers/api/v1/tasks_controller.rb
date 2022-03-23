@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::TasksController < ApplicationController
-  before_action :authenticate_user!
+  # TODO: auth0導入後に置き換え
+  # before_action :authenticate_user!
   before_action :get_user, only: %i[index create]
   before_action :get_task, only: %i[show update destroy]
 
@@ -58,7 +59,8 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def get_user
-    @user = current_user
+    # TODO: auth0導入後に置き換え
+    # @user = current_user
   end
 
   def get_task
