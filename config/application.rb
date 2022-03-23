@@ -26,5 +26,15 @@ module QinTodoServer
     config.time_zone = 'Asia/Tokyo'
     config.i18n.default_locale = :ja
     config.api_only = true
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'http://localhost:3000'
+        resource '*',
+                 :headers => :any,
+                 # TODO: レスポンスのHTTPヘッダとして公開する項目を指定。auth0の導入で見直し必要？
+                 :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+                 :methods => [:get, :post, :patch, :options, :delete, :put]
+      end
+    end
   end
 end
