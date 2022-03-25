@@ -4,4 +4,6 @@ Rails.application.routes.draw do
       resources :tasks
     end
   end
+  get '/public', to: 'public#public'
+  get '/private', to: 'private#private'
 end
