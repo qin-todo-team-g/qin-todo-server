@@ -26,6 +26,7 @@ module QinTodoServer
     config.time_zone = 'Asia/Tokyo'
     config.i18n.default_locale = :ja
     config.api_only = true
+    config.autoload_paths << "#{Rails.root}/lib"
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'http://localhost:3000'
