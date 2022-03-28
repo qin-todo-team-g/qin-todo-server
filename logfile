@@ -1,9 +1,0 @@
-2022-02-24 16:16:12.476 JST [82495] LOG:  listening on IPv6 address "::1", port 5432
-2022-02-24 16:16:12.476 JST [82495] LOG:  listening on IPv4 address "127.0.0.1", port 5432
-2022-02-24 16:16:12.476 JST [82495] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
-2022-02-24 16:16:12.503 JST [82496] LOG:  database system was shut down at 2022-02-24 12:37:06 JST
-2022-02-24 16:16:12.509 JST [82495] LOG:  database system is ready to accept connections
-2022-02-24 16:16:20.654 JST [82542] ERROR:  database "qin_todo_server_development" already exists
-2022-02-24 16:16:20.654 JST [82542] STATEMENT:  CREATE DATABASE "qin_todo_server_development" ENCODING = 'unicode'
-2022-02-24 16:16:20.658 JST [82544] ERROR:  database "qin_todo_server_test" already exists
-2022-02-24 16:16:20.658 JST [82544] STATEMENT:  CREATE DATABASE "qin_todo_server_test" ENCODING = 'unicode'

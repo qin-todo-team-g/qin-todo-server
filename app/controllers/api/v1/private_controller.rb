@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PrivateController < ApplicationController
+class Api::V1::PrivateController < ApplicationController
   include Secured
 
   def private
