@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
 class Api::V1::TasksController < ApplicationController
-  # TODO: auth0導入後に置き換え
-  # before_action :authenticate_user!
+  include Secured
+
   before_action :get_user, only: %i[index create]
   before_action :get_task, only: %i[show update destroy]
 
   def index
-    tasks = @user.tasks.all
-    if tasks.exists?
-      render json: {
-        tasks: tasks
-      }, status: :ok
-    else
-      render json: {}, status: :no_content
-    end
+    # tasks = @user.tasks.all
+    # if tasks.exists?
+    #   render json: {
+    #     tasks: tasks
+    #   }, status: :ok
+    # else
+    #   render json: {}, status: :no_content
+    # end
+
+    render json: Task.all
   end
 
   def create

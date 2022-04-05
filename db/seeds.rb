@@ -9,7 +9,6 @@
   User.create(
     name: "user#{n+1}",
     email: "test#{n+1}@gmail.com",
-    password: 'password',
   )
   5.times do |m|
     Task.create(
