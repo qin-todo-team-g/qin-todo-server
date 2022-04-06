@@ -5,16 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-5.times do |n|
-  User.create(
-    name: "user#{n+1}",
-    email: "test#{n+1}@gmail.com",
+User.create(
+  name: "user_1",
+  email: "test_1@gmail.com",
+  sub: "cCmq98NQUdw4TNdV0bSVXOrGFqSnNfxD@clients",
+)
+5.times do |m|
+  Task.create(
+    user_id: User.find(1).id,
+    task_type: rand(3),
+    title: "task#{m + 1}",
   )
-  5.times do |m|
-    Task.create(
-      user_id: User.find(n+1).id,
-      task_type: rand(3),
-      title: "task#{m+1}",
-    )
-  end
 end
