@@ -10,7 +10,8 @@ module Secured
   private
 
   def authenticate_request!
-    auth_token
+    @auth_payload, @auth_header = auth_token
+    @user = User.from_token_payload(@auth_payload)
   rescue JWT::VerificationError, JWT::DecodeError
     render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end

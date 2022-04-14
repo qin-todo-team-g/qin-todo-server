@@ -2,21 +2,17 @@
 
 class Api::V1::TasksController < ApplicationController
   include Secured
-
-  before_action :get_user, only: %i[index create]
   before_action :get_task, only: %i[show update destroy]
 
   def index
-    # tasks = @user.tasks.all
-    # if tasks.exists?
-    #   render json: {
-    #     tasks: tasks
-    #   }, status: :ok
-    # else
-    #   render json: {}, status: :no_content
-    # end
-
-    render json: Task.all
+    tasks = @user.tasks.all
+    if tasks.exists?
+      render json: {
+        tasks: tasks
+      }, status: :ok
+    else
+      render json: {}, status: :no_content
+    end
   end
 
   def create
@@ -58,11 +54,6 @@ class Api::V1::TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:task_type, :title, :is_done)
-  end
-
-  def get_user
-    # TODO: auth0導入後に置き換え
-    # @user = current_user
   end
 
   def get_task
